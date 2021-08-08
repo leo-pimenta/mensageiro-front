@@ -1,57 +1,65 @@
-import { Grid, TextField, Button, FormControl } from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles'
+import { Grid, useMediaQuery } from '@material-ui/core'
+import { makeStyles, useTheme } from '@material-ui/core/styles'
+import LoginForm from '../LoginForm'
 
-const useStyles = makeStyles({
-    loginGrid: {
-        minHeight: '100vh'
+const useStyles = makeStyles(theme => ({
+    pageGrid: {
+        height: 'max-content'
     },
-    form: {
-        backgroundColor: '#2e2e2e',
-        padding: '2rem',
-        paddingTop: '4rem',
-        boxShadow: '0.2rem 0.2rem black'
+    loginGrid: {
+        height: 'max-content'
+    },
+    imgSmile: {
+        [theme.breakpoints.down('sm')]: {
+            paddingLeft: '10%',
+            height: '9rem',
+            width: '11rem',
+            marginBottom: '1.5rem'
+        },
+        [theme.breakpoints.up('md')]: {
+            height: '12rem',
+            width: '18rem',
+            marginBottom: '5rem'
+        },
+        [theme.breakpoints.up('lg')]: {
+            paddingLeft: '0',
+            marginTop: '0.5rem',
+            marginLeft: '5rem',
+            height: '15rem',
+            width: '20rem',
+        }
     }
-})
+}))
 
-function Login() {
+function Login(props) {
     const classes = useStyles();
+    const theme = useTheme();
+    const shouldCentralize = useMediaQuery(theme.breakpoints.down('md'))
+    const onLogin = props.onLogin ?? function () { };
 
     return (
-        <Grid id='login' 
-            container 
-            justifyContent='center' 
-            direction='column' 
-            alignItems='center'
-            className={classes.loginGrid}
-        >
-            <FormControl className={classes.form}>
-                <Grid 
-                    container
-                    item
-                    spacing='2'
-                    direction='column'
-                >
-                    <Grid container item>
-                        <TextField 
-                            id='input-login' 
-                            variant='outlined' 
-                            label='Login'
-                        />
+        <Grid container className={classes.pageGrid} >
+            {
+                shouldCentralize
+                ?
+                    <Grid item container justifyContent='center'>
+                        <img src={process.env.PUBLIC_URL + '/img/happy-smile.png'} alt="" className={classes.imgSmile} />
                     </Grid>
-                    
-                    <Grid container item>
-                        <TextField 
-                            id="input-Password" 
-                            variant='outlined' 
-                            label='Password'
-                        />
+                :
+                    <Grid item>
+                        <img src={process.env.PUBLIC_URL + '/img/happy-smile.png'} alt="" className={classes.imgSmile} />
                     </Grid>
+            }
 
-                    <Grid container item justifyContent='center'>
-                        <Button id="button-login" variant='outlined'>Log me in</Button>
-                    </Grid>
-                </Grid>
-            </FormControl>
+            <Grid item id='login' 
+                container 
+                justifyContent='center' 
+                direction='column' 
+                alignItems='center'
+                className={classes.loginGrid}
+            >
+                <LoginForm onLogin={onLogin}></LoginForm>
+            </Grid>
         </Grid>
     );
 }

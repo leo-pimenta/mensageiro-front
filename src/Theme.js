@@ -7,7 +7,7 @@ function Theme() {
                 main: '#ffffff'
             },
             type: 'dark'
-        },
+        }
     })
 
     return theme;

@@ -2,11 +2,11 @@
 // https://pt-br.reactjs.org/docs/rendering-elements.html
 // https://medium.com/@eshwaren/enable-emmet-support-for-jsx-in-visual-studio-code-react-f1f5dfe8809c
 
-
 import Login from './Components/Pages/Login'
 import Home from './Components/Pages/Home'
-import { makeStyles } from '@material-ui/core/styles';
-import { ThemeProvider } from '@material-ui/core/styles';
+import Footer from './Components/Footer'
+import { makeStyles, ThemeProvider } from '@material-ui/core/styles';
+import { Grid } from '@material-ui/core'
 import Theme from './Theme'
 
 import {
@@ -19,23 +19,36 @@ import './App.css';
 
 const useStyles = makeStyles({
   app: {
-    backgroundColor: '#171717'
+    backgroundColor: '#171717',
+    color: '#cac4c4'
+  },
+  body: {
+    height: '93vh'
   }
 });
 
 function App() {
   const classes = useStyles();
 
+  function onLogin(history) {
+    console.log('logged in')
+    history.push('/')
+  }
+
   return (
     <ThemeProvider theme={Theme()}>
       <div className="App" className={classes.app}>
-          <Router>
-            <Switch>
-              <Route path='/'>
-                {userIsAuthenticated() ? <Home></Home> : <Login></Login>}
-              </Route>
-            </Switch>
-          </Router>        
+          <Grid container className={classes.body}>
+            <Router>
+              <Switch>
+                <Route path='/' render={({history}) => (
+                  userIsAuthenticated() ? <Home></Home> : <Login onLogin={() => onLogin(history)}></Login>
+                )} />
+              </Switch>  
+            </Router>
+          </Grid>
+          
+          <Footer height='7vh'></Footer>
       </div>
     </ThemeProvider>
   );
