@@ -6,7 +6,12 @@ let userApi = {
             email: email,
             password, password
         })
-        .then(json => json.data.accessToken)
+        .then(json => { 
+            return {
+                nickName: json.data.nickName,
+                token: json.data.accessToken
+            }
+        })
     }
 }
 

@@ -5,12 +5,7 @@ const useStyles = makeStyles(theme => ({
     footer: props => ({
         height: props.height,
         backgroundColor: '#2e2e2e',
-        borderColor: '#000000',
-        borderStyle: 'solid',
-        borderTop: '0.1rem',
-        borderLeft: '0',
-        borderRight: '0',
-        borderBottom: '0'
+        borderTop: 'outset 0.1rem #000000'
     }),
     text: {
         marginLeft: '1rem'

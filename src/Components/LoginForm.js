@@ -37,11 +37,7 @@ function LoginForm(props) {
     function handleSubmit(e) {
         e.preventDefault();
         
-        userApi.login(email, password)
-        .then(token => {
-            localStorage.setItem('token', token)
-            onLogin();
-        })
+        userApi.login(email, password).then(user => onLogin(user));
     }
 
     return (

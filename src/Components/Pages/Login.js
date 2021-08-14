@@ -27,6 +27,7 @@ const useStyles = makeStyles(theme => ({
             marginLeft: '5rem',
             height: '15rem',
             width: '20rem',
+            marginBottom: '0.2rem'
         }
     }
 }))
@@ -35,7 +36,10 @@ function Login(props) {
     const classes = useStyles();
     const theme = useTheme();
     const shouldCentralize = useMediaQuery(theme.breakpoints.down('md'))
-    const onLogin = props.onLogin ?? function () { };
+    const onLogin = user => { 
+        if (props.onLogin)
+            props.onLogin(user)
+    };
 
     return (
         <Grid container className={classes.pageGrid} >
