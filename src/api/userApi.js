@@ -5,13 +5,7 @@ let userApi = {
         return api.post(`${api.url}/user/login`, {
             email: email,
             password, password
-        })
-        .then(json => { 
-            return {
-                nickName: json.data.nickName,
-                token: json.data.accessToken
-            }
-        })
+        });
     }
 }
 

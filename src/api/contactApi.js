@@ -1,0 +1,5 @@
+const contactApi = {
+    getContacts: (user) => {
+        
+    }
+}

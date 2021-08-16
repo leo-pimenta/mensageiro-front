@@ -1,7 +1,7 @@
 import { Grid, TextField, Button, FormControl } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import { useState } from 'react'
-import userApi from '../api/userApi'
+import userService from '../service/userService'
 
 const useStyles = makeStyles(theme => ({
     form: {
@@ -37,7 +37,7 @@ function LoginForm(props) {
     function handleSubmit(e) {
         e.preventDefault();
         
-        userApi.login(email, password).then(user => onLogin(user));
+        userService.login(email, password).then(user => onLogin(user));
     }
 
     return (
