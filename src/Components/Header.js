@@ -2,8 +2,9 @@ import { Grid } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles'
 import UserAvatar from './UserAvatar'
 import LogOut from './LogOut'
+import Notifications from './Notifications'
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
   headerContainer: {
     minHeight: 'fit-content',
     maxHeight: 'fit-content',
@@ -12,12 +13,18 @@ const useStyles = makeStyles({
     paddingTop: '0.5rem',
     paddingBottom: '0.5rem'
   },
-  logOut: {
+  rightPanel: {
     display: 'flex',
     alignItems: 'center',
     marginRight: '2rem'
+  },
+  notifications: {
+    marginRight: '3rem',
+    [theme.breakpoints.down('sm')]: {
+      marginRight: '0.5rem'
+    }
   }
-});
+}));
 
 function Header(props) {
   const onLogout = props.onLogout ?? function () {};
@@ -29,8 +36,14 @@ function Header(props) {
             <UserAvatar></UserAvatar>
           </Grid>
 
-          <Grid item className={classes.logOut}>
-            <LogOut onLogout={onLogout}></LogOut>
+          <Grid item className={classes.rightPanel}>
+            <Grid item className={classes.notifications}>
+              <Notifications></Notifications>
+            </Grid>
+
+            <Grid item>
+              <LogOut onLogout={onLogout}></LogOut>  
+            </Grid>
           </Grid>
         </Grid>
     );
