@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Grid, Tooltip } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import NotificationsActiveIcon from '@material-ui/icons/NotificationsActive';
 import AppModal from './AppModal';
 import ContactNotification from './ContactNotification';
+import contactApi from '../api/contactApi'
 
 const useStyles = makeStyles({
     container: {
@@ -27,39 +28,52 @@ const useStyles = makeStyles({
 
 function Notifications() {
     const [open, setOpen] = React.useState(false);
+    const [invitations, updateInvitations] = React.useState(new Map());
+    const [modalBody, setModalBody] = React.useState(undefined);
+    const classes = useStyles();
 
     function changeModalStatus (status) {
         setOpen(status);
     }
-    
-    const classes = useStyles();
 
-    const modalBody = 
-        <Grid item className={classes.modalBody}>
-            <ContactNotification text='Notification number 1' email='email@gmail.com' contactNickname='Leo'></ContactNotification>
-            <ContactNotification text='Notification number 2'></ContactNotification>
-            <ContactNotification text='Notification number 3'></ContactNotification>
-            <ContactNotification text='Notification number 4'></ContactNotification>
-            <ContactNotification text='Notification number 5'></ContactNotification>
-            <ContactNotification text='Notification number 6'></ContactNotification>
-            <ContactNotification text='Notification number 7'></ContactNotification>
-            <ContactNotification text='Notification number 8'></ContactNotification>
-            <ContactNotification text='Notification number 9'></ContactNotification>
-            <ContactNotification text='Notification number 10'></ContactNotification>
-            <ContactNotification text='Notification number 11'></ContactNotification>
-            <ContactNotification text='Notification number 12'></ContactNotification>
-            <ContactNotification text='Notification number 13'></ContactNotification>
-            <ContactNotification text='Notification number 14'></ContactNotification>
-            <ContactNotification text='Notification number 15'></ContactNotification>
-            <ContactNotification text='Notification number 16'></ContactNotification>
-            <ContactNotification text='Notification number 17'></ContactNotification>
-            <ContactNotification text='Notification number 18'></ContactNotification>
-            <ContactNotification text='Notification number 19'></ContactNotification>
-            <ContactNotification text='Notification number 20'></ContactNotification>
-            <ContactNotification text='Notification number 21'></ContactNotification>
-            <ContactNotification text='Notification number 22'></ContactNotification>
-            <ContactNotification text='Notification number 23'></ContactNotification>
-        </Grid>
+    function getInvitations() {
+        return contactApi.getInvitations()
+            .then(inv => {
+                const map = new Map();
+                inv.forEach(invitation => map.set(invitation.guid, invitation));
+                updateInvitations(map);
+            });
+    }
+
+    function removeInvitation (invitation) {
+        updateInvitations(invitations => {
+            invitations.delete(invitation.guid);
+            const newInvitations = [...invitations];
+            return newInvitations;
+        });
+    }
+
+    function createInvitationNotifications () {        
+        return Array.from(invitations.values())
+            .map(invitation =>  
+                <ContactNotification 
+                    invitation={invitation} 
+                    onAccepted={removeInvitation} 
+                    onRefused={removeInvitation}
+                >    
+                </ContactNotification>)
+    }
+
+    function updateBody () {
+        setModalBody(
+            <Grid item className={classes.modalBody}>
+                { createInvitationNotifications() }
+            </Grid>
+        );
+    }
+    
+    useEffect(() => getInvitations(), []);
+    useEffect(() => updateBody(), [invitations])
 
     return (
         <div>

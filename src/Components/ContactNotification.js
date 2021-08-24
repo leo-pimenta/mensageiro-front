@@ -1,6 +1,7 @@
 import Notification from './Notification'
 import { Grid, Avatar, Button } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
+import contactService from '../service/contactService';
 
 const useStyle = makeStyles({
     container: {
@@ -18,9 +19,22 @@ const useStyle = makeStyles({
 });
 
 function ContactNotification (props) {
-    const userName = props?.contactNickname ?? 'nickname-prop';
-    const email = props?.email ?? 'email-prop';
+    const invitation = props?.invitation ?? undefined;
+    const userName = invitation?.contactNickname ?? 'nickname-prop';
+    const email = invitation?.email ?? 'email-prop';
+    const onAccepted = props?.onAccepted ?? function () {};
+    const onRefused = props?.onRefused ?? function () {};
     const classes = useStyle();
+
+    function acceptInvitation () {
+        contactService.acceptInvitation(invitation)
+            .then(() => onAccepted(invitation))
+    }
+
+    function refuseInvitation() {
+        contactService.refuseInvitation(invitation)
+            .then(() => onRefused(invitation))
+    }
 
     const body = (
         <Grid item container>
@@ -30,11 +44,11 @@ function ContactNotification (props) {
             
             <Grid item container justifyContent='flex-end' spacing='1'>
                 <Grid item>
-                    <Button variant='outlined' className={classes.button}>Accept</Button>
+                    <Button variant='outlined' className={classes.button} onClick={acceptInvitation}>Accept</Button>
                 </Grid>
                 
                 <Grid item>
-                    <Button variant='outlined' color='secondary' className={classes.button}>Refuse</Button>
+                    <Button variant='outlined' color='secondary' className={classes.button} onClick={refuseInvitation}>Refuse</Button>
                 </Grid>
             </Grid>
         </Grid>
