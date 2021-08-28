@@ -23,6 +23,9 @@ const useStyles = makeStyles({
         maxHeight: '100%',
         minHeight: '100%',
         overflow: 'auto'
+    },
+    noNotification: {
+        textAlign: 'center'
     }
 });
 
@@ -54,14 +57,20 @@ function Notifications() {
     }
 
     function createInvitationNotifications () {        
-        return Array.from(invitations.values())
-            .map(invitation =>  
-                <ContactNotification 
-                    invitation={invitation} 
-                    onAccepted={removeInvitation} 
-                    onRefused={removeInvitation}
-                >    
-                </ContactNotification>)
+        const arr = Array.from(invitations.values());
+
+        if (arr.length === 0) {
+            return <p className={classes.noNotification}>You don't have any notifications.</p>
+        }
+        
+        return arr.map(invitation =>  
+            <ContactNotification 
+                invitation={invitation} 
+                onAccepted={removeInvitation} 
+                onRefused={removeInvitation}
+            >    
+            </ContactNotification>);
+            
     }
 
     function updateBody () {
