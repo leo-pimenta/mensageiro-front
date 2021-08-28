@@ -6,7 +6,8 @@ const userService = {
             .then(json => {
                 return {
                     nickName: json.data.nickName,
-                    token: json.data.accessToken
+                    token: json.data.accessToken,
+                    refreshToken: json.data.refreshToken
                 }
             })
     }
