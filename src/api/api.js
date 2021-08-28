@@ -45,7 +45,7 @@ function handleResponse(response, url, options) {
                     logout();
                 }
                 else {
-                    options.headers['Authorization'] = getToken();
+                    options.headers['Authorization'] = `Bearer ${getToken()}`;
                     return Request(url, options);
                 }
             })

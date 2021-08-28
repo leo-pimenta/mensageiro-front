@@ -1,5 +1,7 @@
+import React from 'react'
 import Notification from './Notification'
 import { Grid, Avatar, Button } from '@material-ui/core'
+
 import { makeStyles } from '@material-ui/styles'
 import contactService from '../service/contactService';
 
@@ -20,7 +22,7 @@ const useStyle = makeStyles({
 
 function ContactNotification (props) {
     const invitation = props?.invitation ?? undefined;
-    const userName = invitation?.contactNickname ?? 'nickname-prop';
+    const userName = invitation?.nickname ?? 'nickname-prop';
     const email = invitation?.email ?? 'email-prop';
     const onAccepted = props?.onAccepted ?? function () {};
     const onRefused = props?.onRefused ?? function () {};

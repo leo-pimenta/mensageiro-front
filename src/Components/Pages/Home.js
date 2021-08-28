@@ -8,7 +8,6 @@ function Home(props) {
     return (
         <Grid container spacing='0' direction='column'>
             <Header onLogout={onLogout}></Header>
-
             <ContactList></ContactList>
         </Grid>
     );
