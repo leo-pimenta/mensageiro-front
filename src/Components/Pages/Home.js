@@ -19,13 +19,12 @@ const useStyle = makeStyles({
     chatContainer: {
         marginLeft: '1rem',
         marginTop: '1rem',
-        // minHeight: '100%',
         height: '100%',
         width: 'max-content'
     },
     homeBodyContent: {
-        minHeight: '100%'
-    }
+        height: 'calc(100% - 3.5rem)'
+    },
 });
 
 function Home(props) {
@@ -71,7 +70,7 @@ function Home(props) {
         <Grid container spacing='0' direction='column'>
             <Header onLogout={onLogout}></Header>
             
-            <Grid container item spacing='2' className={classes.home}>
+            <Grid container item spacing='2' className={classes.homeBodyContent}>
                 { getContactList() }
 
                 <Grid item className={classes.chatContainer} xs='8'>

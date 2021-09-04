@@ -6,8 +6,7 @@ import Notifications from './Notifications'
 
 const useStyles = makeStyles(theme => ({
   headerContainer: {
-    minHeight: 'fit-content',
-    maxHeight: 'fit-content',
+    height: '3.5rem',
     backgroundColor: '#2e2e2e',
     borderBottom: 'outset 0.1rem #000000',
     paddingTop: '0.5rem',
