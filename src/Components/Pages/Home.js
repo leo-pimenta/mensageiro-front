@@ -1,34 +1,44 @@
 import React from 'react'
 import { Grid, useMediaQuery, Drawer, Button } from '@material-ui/core'
 import { makeStyles, useTheme } from '@material-ui/core/styles'
-import Chat from '@material-ui/icons/Chat'
+import ChatIcon from '@material-ui/icons/Chat'
 import Header from '../Header'
 import ContactList from '../ContactList';
+import Chat from '../Chat'
 import userService from '../../service/userService';
 
 const useStyle = makeStyles({
     contactsButton: {
-        position: 'fixed',
         height: '3rem',
         backgroundColor: '#5f5f5f'
     },
     chatIconContainer: {
         paddingTop: '0.4rem',
-        marginRight: '0.2rem'
+        marginRight: '0.2rem',
+    },
+    chatContainer: {
+        marginLeft: '1rem',
+        marginTop: '1rem',
+        // minHeight: '100%',
+        height: '100%',
+        width: 'max-content'
+    },
+    homeBodyContent: {
+        minHeight: '100%'
     }
 });
 
 function Home(props) {
     const onLogout = props.onLogout ?? function () {};
     const theme = useTheme();
-    const isSmall = useMediaQuery(theme.breakpoints.down('md'));
+    const isSmall = useMediaQuery(theme.breakpoints.down('sm'));
     const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
     const classes = useStyle();
 
     function getContactList() {
         if (isSmall) {
             return (
-                <div>
+                <Grid container>
                     <Grid 
                         container 
                         item 
@@ -38,14 +48,14 @@ function Home(props) {
                         alignItems='center'
                         justifyContent='center'
                     >
-                        <Grid item className={classes.chatIconContainer}><Chat></Chat></Grid>
+                        <Grid item className={classes.chatIconContainer}><ChatIcon></ChatIcon></Grid>
                         <Grid item>Contacts</Grid>
                     </Grid>
 
                     <Drawer anchor='top' open={isDrawerOpen} onClose={() => setIsDrawerOpen(false)}>
                         <ContactList></ContactList>
                     </Drawer>
-                </div>
+                </Grid>
             );
         }
         else {
@@ -61,11 +71,11 @@ function Home(props) {
         <Grid container spacing='0' direction='column'>
             <Header onLogout={onLogout}></Header>
             
-            <Grid container item spacing='2'>
+            <Grid container item spacing='2' className={classes.home}>
                 { getContactList() }
 
-                <Grid>
-                    <p>Chat...</p>
+                <Grid item className={classes.chatContainer} xs='8'>
+                    <Chat nickname='teste'></Chat>
                 </Grid>
             </Grid>            
         </Grid>

@@ -10,9 +10,9 @@ const useStyles = makeStyles({
     }
 });
 
-function UserAvatar() {
+function UserAvatar(props) {
     const classes = useStyles();
-    const nickName = JSON.parse(localStorage.getItem('user')).nickName;
+    const nickName = props?.nickname;
 
     return (
         <Grid container direction='row' alignItems='center' spacing='1'>

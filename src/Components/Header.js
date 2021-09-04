@@ -29,11 +29,12 @@ const useStyles = makeStyles(theme => ({
 function Header(props) {
   const onLogout = props.onLogout ?? function () {};
   const classes = useStyles();
+  const nickname = JSON.parse(localStorage.getItem('user')).nickName;
   
   return (
         <Grid container className={classes.headerContainer} direction='row' justifyContent='space-between'>
           <Grid item>
-            <UserAvatar></UserAvatar>
+            <UserAvatar nickname={nickname}></UserAvatar>
           </Grid>
 
           <Grid item className={classes.rightPanel}>

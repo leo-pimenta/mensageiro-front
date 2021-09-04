@@ -17,15 +17,20 @@ import {
 
 import './App.css';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
     app: {
         backgroundColor: '#171717',
-        color: '#cac4c4'
+        color: '#cac4c4',
+        height: '100%',
+        margin: '0',
+        padding: '0'
     },
-    body: {
-        height: '93vh'
-    }
-});
+    body: props => ({
+        margin: '0',
+        padding: '0',
+        height: 'calc(100% - 3.5rem)'
+    })
+}));
 
 function App() {
     const classes = useStyles();
@@ -55,7 +60,7 @@ function App() {
                     </Router>
                 </Grid>
 
-                <Footer height='7vh'></Footer>
+                <Footer></Footer>
             </div>
         </ThemeProvider>
     );
