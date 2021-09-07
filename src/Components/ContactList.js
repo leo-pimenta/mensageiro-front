@@ -7,8 +7,12 @@ const useStyle = makeStyles({
     contactElement: {
         cursor: 'pointer',
         marginTop: '0.5rem',
+        width: '100%',
         '&:hover': {
-            backgroundColor: '#000000'
+            backgroundColor: '#000000',
+            '& $contactSelectedSpan': {
+                backgroundColor: '#ffffff'
+            }
         }
     },
     elementParagraph: {
@@ -27,6 +31,14 @@ const useStyle = makeStyles({
     },
     homeContainer: {
         marginLeft: '0.5rem'
+    },
+    contactSelectedSpanContainer: {
+        height: '100%'
+    },
+    contactSelectedSpan: {
+        marginLeft: '0.4rem',
+        width: '0.2rem',
+        height: '100%'
     }
 });
 
@@ -68,6 +80,10 @@ function ContactList () {
                         {/* // TODO put real message here */}
                         <p className={classes.elementParagraph}>This was my last message to you. This message should be too long to appear in heeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeere'</p>
                     </Grid>
+                </Grid>
+
+                <Grid item className={classes.contactSelectedSpanContainer}>
+                    <div className={classes.contactSelectedSpan}></div>
                 </Grid>
             </Grid>
         );

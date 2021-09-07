@@ -60,7 +60,9 @@ function App() {
                     </Router>
                 </Grid>
 
-                <Footer></Footer>
+                <Grid container>
+                    <Footer></Footer>
+                </Grid>
             </div>
         </ThemeProvider>
     );

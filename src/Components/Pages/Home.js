@@ -18,13 +18,16 @@ const useStyle = makeStyles({
     },
     chatContainer: {
         marginLeft: '1rem',
-        marginTop: '1rem',
         height: '100%',
         width: 'max-content'
     },
     homeBodyContent: {
         height: 'calc(100% - 3.5rem)'
     },
+    contactsContainer: {
+        height: '100%',
+        backgroundColor: '#060606'
+    }
 });
 
 function Home(props) {
@@ -59,7 +62,7 @@ function Home(props) {
         }
         else {
             return (
-                <Grid item xs='3'>
+                <Grid item xs='3' className={classes.contactsContainer}>
                     <ContactList></ContactList>
                 </Grid>
             );
@@ -67,7 +70,7 @@ function Home(props) {
     }
 
     return (
-        <Grid container spacing='0' direction='column'>
+        <Grid container>
             <Header onLogout={onLogout}></Header>
             
             <Grid container item spacing='2' className={classes.homeBodyContent}>
