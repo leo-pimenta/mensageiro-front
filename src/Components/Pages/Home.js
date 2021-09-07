@@ -19,7 +19,7 @@ const useStyle = makeStyles({
     chatContainer: {
         marginLeft: '1rem',
         height: '100%',
-        width: 'max-content'
+        width: '100%'
     },
     homeBodyContent: {
         height: 'calc(100% - 3.5rem)'
