@@ -42,11 +42,12 @@ const useStyle = makeStyles({
     }
 });
 
-function ContactList () {
+function ContactList (props) {
     const [contacts, setContacts] = React.useState([]);
     const [filteredContacts, setFilteredContacts] = React.useState([]);
     const [body, setBody] = React.useState(undefined);
     const classes = useStyle();
+    const onclick = props?.onclick ?? function () {};
 
     function createContactsList() {
         return filteredContacts.map(createContactElement);
@@ -62,7 +63,7 @@ function ContactList () {
         let contactObj = contact.contact;
         
         return (
-            <Grid container item direction='row' alignItems='center' spacing='1' className={classes.contactElement}>
+            <Grid container item direction='row' alignItems='center' spacing='1' className={classes.contactElement} onClick={() => onclick(contactObj)}>
                 <Grid item>
                     <Avatar></Avatar>
                 </Grid>

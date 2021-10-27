@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Grid, useMediaQuery, Drawer, Button } from '@material-ui/core'
 import { makeStyles, useTheme } from '@material-ui/core/styles'
 import ChatIcon from '@material-ui/icons/Chat'
@@ -36,6 +36,11 @@ function Home(props) {
     const isSmall = useMediaQuery(theme.breakpoints.down('sm'));
     const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
     const classes = useStyle();
+    const [contactSelected, setContactSelected] = React.useState(undefined);
+
+    function createContactListElement() {
+        return <ContactList onclick={contact => setContactSelected(contact)}></ContactList>
+    }
 
     function getContactList() {
         if (isSmall) {
@@ -55,7 +60,7 @@ function Home(props) {
                     </Grid>
 
                     <Drawer anchor='top' open={isDrawerOpen} onClose={() => setIsDrawerOpen(false)}>
-                        <ContactList></ContactList>
+                        {createContactListElement()}
                     </Drawer>
                 </Grid>
             );
@@ -63,10 +68,20 @@ function Home(props) {
         else {
             return (
                 <Grid item xs='3' className={classes.contactsContainer}>
-                    <ContactList></ContactList>
+                    {createContactListElement()}
                 </Grid>
             );
         }
+    }
+
+    function renderNoContactSelected () {
+        return (
+            <Grid container justifyContent='center' alignItems='center' className={classes.chatContainer}>
+                <Grid item>
+                    <h2>No contact selected.</h2>
+                </Grid>
+            </Grid>
+        )
     }
 
     return (
@@ -77,7 +92,7 @@ function Home(props) {
                 { getContactList() }
 
                 <Grid item className={classes.chatContainer} xs='8'>
-                    <Chat nickname='teste'></Chat>
+                    { contactSelected ? <Chat contact={contactSelected}></Chat> : renderNoContactSelected() }
                 </Grid>
             </Grid>            
         </Grid>

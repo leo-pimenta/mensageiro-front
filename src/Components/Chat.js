@@ -55,7 +55,7 @@ const useStyle = makeStyles(theme => ({
 }));
 
 export default function Chat (props) {
-    const nickname = props?.nickname;
+    const contact = props?.contact;
     const classes = useStyle();
     const messageColor1 = '#252525';
     const messageColor2 = '#313131';
@@ -71,7 +71,7 @@ export default function Chat (props) {
     return (
         <Grid container direction='column' spacing='1' className={classes.chatContainer}>
             <Grid container item className={classes.contactNicknameContainer}>
-                <UserAvatar nickname={nickname}></UserAvatar>
+                <UserAvatar nickname={contact.nickname}></UserAvatar>
             </Grid>
 
             <Grid container item className={classes.chatBodyContainer} id='chat-body-container'>
