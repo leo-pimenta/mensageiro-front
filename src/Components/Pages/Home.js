@@ -1,11 +1,10 @@
-import React, { useState } from 'react'
-import { Grid, useMediaQuery, Drawer, Button } from '@material-ui/core'
+import React from 'react'
+import { Grid, useMediaQuery, Drawer } from '@material-ui/core'
 import { makeStyles, useTheme } from '@material-ui/core/styles'
 import ChatIcon from '@material-ui/icons/Chat'
 import Header from '../Header'
 import ContactList from '../ContactList';
 import Chat from '../Chat'
-import userService from '../../service/userService';
 
 const useStyle = makeStyles({
     contactsButton: {

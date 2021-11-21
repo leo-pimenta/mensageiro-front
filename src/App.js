@@ -47,7 +47,7 @@ function App() {
 
     return (
         <ThemeProvider theme={Theme()}>
-            <div className="App" className={classes.app}>
+            <div className={classes.app}>
                 <Grid container className={classes.body}>
                     <Router>
                         <Switch>

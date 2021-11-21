@@ -55,8 +55,8 @@ function ContactList (props) {
 
     function onContactsFilterInput (e) {
         const text = e?.target?.value.toLowerCase();
-        const filteredContacts = !text ? contacts : contacts.filter(key => key.contact.nickname.toLowerCase().includes(text));
-        setFilteredContacts(filteredContacts);
+        const internalFilteredContacts = !text ? contacts : contacts.filter(key => key.contact.nickname.toLowerCase().includes(text));
+        setFilteredContacts(internalFilteredContacts);
     }
 
     function createContactElement(contact) {

@@ -1,7 +1,5 @@
 import { useEffect } from 'react';
-import { Grid, TextField, Button, Tooltip } from '@material-ui/core'
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import { makeStyles } from '@material-ui/core';
+import { Grid, TextField, Button, Tooltip, makeStyles } from '@material-ui/core'
 import SendIcon from '@material-ui/icons/Send';
 import UserAvatar from './UserAvatar'
 import Message from './Message'
