@@ -1,8 +1,9 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Grid, TextField, Button, Tooltip, makeStyles } from '@material-ui/core'
 import SendIcon from '@material-ui/icons/Send';
 import UserAvatar from './UserAvatar'
 import Message from './Message'
+import {messageService} from '../service/messageService'
 
 const useStyle = makeStyles(theme => ({
     chatContainer: {
@@ -53,61 +54,52 @@ const useStyle = makeStyles(theme => ({
 }));
 
 export default function Chat (props) {
-    const contact = props?.contact;
+    const contactObj = props?.contact;
     const classes = useStyle();
     const messageColor1 = '#252525';
     const messageColor2 = '#313131';
+    const [chat, setChat] = useState([])
 
     function scrollChatToBottom() {
         const chatBodyContainer = document.getElementById('chat-body-container');
         chatBodyContainer.scrollTop = chatBodyContainer.scrollHeight;
     }
 
+    function renderMessages() {
+        console.log(chat.messages)
+
+        if (!chat.messages || chat.messages.length == 0)
+        {
+            return ( <Grid item>
+                    <Message nickname='Chat Bot' text='No messages sent on this chat yet.' backgroundColor={messageColor1} side='left'></Message>
+                </Grid>)
+        }
+
+        return chat.map(message => 
+            <Grid item>
+                <Message nickname='teste' text='Bla bla bla...' backgroundColor={messageColor1} side='left'></Message>
+            </Grid>);
+    }
+
     useEffect(scrollChatToBottom, []);
+
+    useEffect(() => {
+        messageService.getMessages(contactObj.groupId, 1)
+            .then(msgs => setChat(msgs));
+    }, [contactObj])
     
     // TODO use real data
     return (
         <Grid container direction='column' spacing='1' className={classes.chatContainer}>
             <Grid container item className={classes.contactNicknameContainer}>
-                <UserAvatar nickname={contact.nickname}></UserAvatar>
+                <UserAvatar nickname={contactObj.contact.nickname}></UserAvatar>
             </Grid>
 
             <Grid container item className={classes.chatBodyContainer} id='chat-body-container'>
                 
                 <Grid container item direction='column' spacing='1'>
-                    <Grid item>
-                        <Message nickname='teste' text='Bla bla bla...' backgroundColor={messageColor1} side='left'></Message>
-                    </Grid>
-                    
-                    <Grid item>
-                        <Message nickname='eu' text='Mi mi mi...' backgroundColor={messageColor2} side='right'></Message>
-                    </Grid>
-
-                    <Grid item>
-                        <Message nickname='teste' text='Bla bla bla...' backgroundColor={messageColor1} side='left'></Message>
-                    </Grid>
-
-                    <Grid item>
-                        <Message nickname='eu' text='Mi mi mi...' backgroundColor={messageColor2} side='right'></Message>
-                    </Grid>
-
-                    <Grid item>
-                        <Message nickname='teste' text='Bla bla bla...' backgroundColor={messageColor1} side='left'></Message>
-                    </Grid>
-
-                    <Grid item>
-                        <Message nickname='eu' text='Mi mi mi...' backgroundColor={messageColor2} side='right'></Message>
-                    </Grid>
-
-                    <Grid item>
-                        <Message nickname='teste' text='Bla bla bla...' backgroundColor={messageColor1} side='left'></Message>
-                    </Grid>
-
-                    <Grid item>
-                        <Message nickname='eu' text='Mi mi mi...' backgroundColor={messageColor2} side='right'></Message>
-                    </Grid>
+                    { renderMessages() }               
                 </Grid>
-                
             </Grid>
 
             <Grid container item alignItems='center' spacing='1' className={classes.textInputContainer}>

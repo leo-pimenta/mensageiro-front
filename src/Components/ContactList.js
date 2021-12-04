@@ -60,7 +60,7 @@ function ContactList (props) {
     }
 
     function createContactElement(contact) {
-        let contactObj = contact.contact;
+        let contactObj = contact;
         
         return (
             <Grid container item direction='row' alignItems='center' spacing='1' className={classes.contactElement} onClick={() => onclick(contactObj)}>
@@ -72,7 +72,7 @@ function ContactList (props) {
                     <Grid item>
                         <p className={classes.elementParagraph}>
                             <strong>
-                                {contactObj.nickname}
+                                {contactObj.contact.nickname}
                             </strong>
                         </p>
                     </Grid>
