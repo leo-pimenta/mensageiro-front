@@ -4,6 +4,7 @@ import SendIcon from '@material-ui/icons/Send';
 import UserAvatar from './UserAvatar'
 import Message from './Message'
 import {messageService} from '../service/messageService'
+import userService from '../service/userService'
 
 const useStyle = makeStyles(theme => ({
     chatContainer: {
@@ -59,10 +60,31 @@ export default function Chat (props) {
     const messageColor1 = '#252525';
     const messageColor2 = '#313131';
     const [chat, setChat] = useState([])
+    const [newMessage, setNewMessage] = useState('')
+    const userId = userService.getUserId()
 
     function scrollChatToBottom() {
         const chatBodyContainer = document.getElementById('chat-body-container');
         chatBodyContainer.scrollTop = chatBodyContainer.scrollHeight;
+    }
+
+    function sendMessage() {
+        console.log(newMessage)
+        
+        messageService.send(contactObj.groupId, newMessage)
+            .catch(err => console.error('Message not sent.'))
+
+        setNewMessage('')
+    }
+
+    function onMessageInput(args) {
+        setNewMessage(args.target.value)
+    }
+
+    function onKeyDown(args) {
+        if (args.code === 'Enter' && newMessage) {
+            sendMessage();
+        }
     }
 
     function renderMessages() {
@@ -75,10 +97,17 @@ export default function Chat (props) {
                 </Grid>)
         }
 
-        return chat.map(message => 
-            <Grid item>
-                <Message nickname='teste' text='Bla bla bla...' backgroundColor={messageColor1} side='left'></Message>
-            </Grid>);
+        return chat.messages.map(message => {
+            return (
+                <Grid item>
+                    {
+                        message.userId == userId
+                            ? <Message nickname={message.userNickname} text={message.text} backgroundColor={messageColor1} side='left'></Message>
+                            : <Message nickname={message.userNickname} text={message.text} backgroundColor={messageColor2} side='right'></Message>
+                    }
+                </Grid>
+            )
+        })
     }
 
     useEffect(scrollChatToBottom, []);
@@ -104,12 +133,18 @@ export default function Chat (props) {
 
             <Grid container item alignItems='center' spacing='1' className={classes.textInputContainer}>
                 <Grid item xs='11'>
-                    <TextField className={classes.chatTextInput} label='Send a message...'></TextField>
+                    <TextField 
+                        className={classes.chatTextInput} 
+                        value={newMessage} 
+                        onInput={onMessageInput}
+                        onKeyDown={onKeyDown} 
+                        label='Send a message...'
+                    ></TextField>
                 </Grid>
 
                 <Grid item xs='1'>
                     <Tooltip title='Send' placement='top'>
-                        <Button className={classes.sendButton}><SendIcon></SendIcon></Button>
+                        <Button className={classes.sendButton} onClick={sendMessage}><SendIcon></SendIcon></Button>
                     </Tooltip>
                 </Grid>
             </Grid>

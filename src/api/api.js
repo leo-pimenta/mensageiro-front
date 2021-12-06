@@ -52,13 +52,13 @@ function handleResponse(response, url, options) {
     }
 }
 
+function getToken() {
+    return JSON.parse(localStorage.getItem('user'))?.token;
+}
+
 function Request(url, options) {
     return fetch(url, options)
         .then(response => handleResponse(response, url, options));
-}
-
-function getToken() {
-    return JSON.parse(localStorage.getItem('user'))?.token;
 }
 
 function getRefreshToken() {
@@ -68,7 +68,7 @@ function getRefreshToken() {
 let api = {
     url: url,
 
-    post: function (url, jsonBody) {
+    post: (url, jsonBody) => {
         const headers = {
             'Content-Type': 'application/json',
             'Accept': 'application/json'
@@ -87,7 +87,7 @@ let api = {
         });
     },
 
-    get: function (url) {
+    get: url => {
         const token = getToken();
 
         return Request(url, {
@@ -97,7 +97,9 @@ let api = {
                 'Accept': 'application/json'
             }
         });
-    }
+    },
+
+    getToken: () => getToken()
 }
 
 export default api
